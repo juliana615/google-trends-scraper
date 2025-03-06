@@ -1,27 +1,27 @@
-fetch("https://trends.google.com/trends/api/widgetdata/relatedsearches?hl=en-US&tz=-480&req=%7B%22restriction%22:%7B%22geo%22:%7B%22country%22:%22US%22%7D,%22time%22:%222024-03-04+2025-03-04%22,%22originalTimeRangeForExploreUrl%22:%22today+12-m%22,%22complexKeywordsRestriction%22:%7B%22keyword%22:%5B%7B%22type%22:%22BROAD%22,%22value%22:%22startup%22%7D%5D%7D%7D,%22keywordType%22:%22QUERY%22,%22metric%22:%5B%22TOP%22,%22RISING%22%5D,%22trendinessSettings%22:%7B%22compareTime%22:%222023-03-04+2024-03-03%22%7D,%22requestOptions%22:%7B%22property%22:%22%22,%22backend%22:%22IZG%22,%22category%22:0%7D,%22language%22:%22en%22,%22userCountryCode%22:%22US%22,%22userConfig%22:%7B%22userType%22:%22USER_TYPE_LEGIT_USER%22%7D%7D&token=APP6_UEAAAAAZ8iXlgCBaFRBR8fREaFEisGcGrCyJRV_", {
-  "headers": {
-    "accept": "application/json, text/plain, */*",
-    "accept-language": "en-US,en;q=0.9",
-    "priority": "u=1, i",
-    "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Google Chrome\";v=\"133\", \"Chromium\";v=\"133\"",
-    "sec-ch-ua-arch": "\"x86\"",
-    "sec-ch-ua-bitness": "\"64\"",
-    "sec-ch-ua-form-factors": "\"Desktop\"",
-    "sec-ch-ua-full-version": "\"133.0.6943.142\"",
-    "sec-ch-ua-full-version-list": "\"Not(A:Brand\";v=\"99.0.0.0\", \"Google Chrome\";v=\"133.0.6943.142\", \"Chromium\";v=\"133.0.6943.142\"",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-model": "\"\"",
-    "sec-ch-ua-platform": "\"Windows\"",
-    "sec-ch-ua-platform-version": "\"15.0.0\"",
-    "sec-ch-ua-wow64": "?0",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "x-client-data": "CLC1yQEIh7bJAQiitskBCKmdygEI7ODKAQiTocsBCImjywEIhaDNAQi91c4BCIDWzgEIuuDOAQiD5M4BCK7kzgEIjOXOARiPzs0B",
-    "cookie": "__utmc=10102256; __utmz=10102256.1741105672.8.4.utmcsr=trends.google.com|utmccn=(referral)|utmcmd=referral|utmcct=/; __utma=10102256.1127519021.1740957602.1741105672.1741105672.10; __utmt=1; __utmb=10102256.3.9.1741111678156; HSID=Axd4sT7jgiQJZxI35; SSID=ALG-6ly3f79ZskloZ; APISID=JOXLujcJUcSXPJ3h/ATDn9rFkuWpGmKwjn; SAPISID=0nutfgB2KiwE5Kgd/AhQ1IC-3dcxf77kpP; __Secure-1PAPISID=0nutfgB2KiwE5Kgd/AhQ1IC-3dcxf77kpP; __Secure-3PAPISID=0nutfgB2KiwE5Kgd/AhQ1IC-3dcxf77kpP; SEARCH_SAMESITE=CgQIrJ0B; SID=g.a000uAhwK_O9UJ94up-VgKYGSEzGKADY8lsN3Z4zExDYunjWOL9d2CrFKAjQb5WVHGV3EJeSeQACgYKAS8SARMSFQHGX2MijWsBAyGEV5FkAsSwNI4z1xoVAUF8yKpCbtylgAdCpGMkIGSL1aWp0076; __Secure-1PSID=g.a000uAhwK_O9UJ94up-VgKYGSEzGKADY8lsN3Z4zExDYunjWOL9dTivc0yVtbBesMgs0vQdIcAACgYKAWQSARMSFQHGX2MiUp2t6Yzi91KCrrTWoqtgARoVAUF8yKpWXB41sVSq_cqvvujj9JWS0076; __Secure-3PSID=g.a000uAhwK_O9UJ94up-VgKYGSEzGKADY8lsN3Z4zExDYunjWOL9dD8dQlEJXf6pLksCXjBOC4gACgYKAXMSARMSFQHGX2MiLnCPNQvAmi2boKzPKMk7cRoVAUF8yKpguI892pEF08fECnTOjA3J0076; _gid=GA1.3.252607514.1740957604; OTZ=7977560_24_24__24_; AEC=AVcja2eNv3bhyiR4_-exO2QDnVEY4w4E18Ya-hcESTldeIA6_6pidOBfgLQ; NID=522=m5pbt-oHOXhqEOQ_ybDBL37bcXR_MCOsiaJTt1j8iCp0bYDmJdafvexXhTVkAyt9x3naktxiBJ4rtfVrBJbCK4NplqRRLywAGpOQDuYPE-k8Y_cAppcCxqak2b6MA5bki8m0tXvpgXCG24ZOSPF1_LFwlzLlhC_1W1ZaxmzxXOPvX7xzuMwkhgjcc3t9jKYUPKRvgGTzDkEh-ZiZPyc8Hh6s9eAHeFCsc2dzKVhPZcMvqexgrMULIOsPi8OPSKvb7YfZ2ZjXdpCrovtlUZlVFlUBl_AEVDjxD03sczBjtSQ35hAoq_FnmldqQ9gpCz4OBA3Kym6QNoFAO6P9aaXHEY2pYgg7tFncrAVUth8YXU0UujRHLAjJ5BjpcFKhCn4XddHT4cA20rsP2MsrsNG4MHOlHOt8Siofk-JQHtiYmLVR0V6IAP_QhTmvloepa4nsfJ_pH8vIqCOeG6gAHW9KEmLpgJuwXLZgGDx2LGmZSF4dKAAutmjksc7uLW6X74pul7mgC5lZYUdeJd3Xf0oraFXqSs2YjvG2c1-wclnfyhO4bFTwv9IUoHHDBV2G5aKbXIivJxb-LRepdfpmZbVbEIHgfdPGcIv7bTwVYNMwDJF57KXU2aJjqeD8sWgghqyhof-Di18b3tyfXRgjg7qxShXl3tZqPrbogbU-bsVnZ73JMGkx9c08Mt1jgSnyHzfEfFAs7YgStXkDi2_YqLisGrNtgNeIgXYXyT0VBcVnlep3bLo3rA4B42-Kr5ZdC5VwVvg5cOU0SsSywWAxBVt1iyfM95GmXI0LTJ4T2eQ2B2U8hWrzNko5MQd5YLwhqDp3pE_ENkowgdbjUiEbD9JjBU93I9M6TtpbgMUz9zka1S8JGdWaMRBUCkuoJgyScQ; __Secure-1PSIDTS=sidts-CjIBEJ3XV7v38Olp7poZYmeZLycRwhYyY31dbdxYVKYA0c3BQFUzSxoOJwzOZOS4B6FPxRAA; __Secure-3PSIDTS=sidts-CjIBEJ3XV7v38Olp7poZYmeZLycRwhYyY31dbdxYVKYA0c3BQFUzSxoOJwzOZOS4B6FPxRAA; _ga_VWZPXDNJJB=GS1.1.1741111678.12.1.1741112841.0.0.0; _ga=GA1.3.1127519021.1740957602; _gat_gtag_UA_4401283=1; SIDCC=AKEyXzWLVh8-dGNVhzTMjoRbPCTedMiSvpf_FB3r6UM4pdGCsXY3Lc5xtdPpVwy6K6R3PhfsS7I; __Secure-1PSIDCC=AKEyXzXqH-5RfHTSRddCOt9URd2dz8Kjp8kyxeGT0V1SGEKISHqVkcciq4r1ZgL3wkSAQsEQimM; __Secure-3PSIDCC=AKEyXzVKz7aT35GSfV3bzKgZmR9JtK_vI_3tJfCaU20yu6CR-V0lw7M_aWOTj3ZWlb5MMUKsIDAC",
-    "Referer": "https://trends.google.com/trends/explore?geo=US&q=startup&hl=en",
-    "Referrer-Policy": "strict-origin-when-cross-origin"
-  },
-  "body": null,
-  "method": "GET"
-});
+{
+    "headers": {
+        "accept": "application/json, text/plain, */*",
+        "accept-language": "en-US,en;q=0.9",
+        "content-type": "application/json;charset=UTF-8",
+        "priority": "u=1, i",
+        "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Google Chrome\";v=\"133\", \"Chromium\";v=\"133\"",
+        "sec-ch-ua-arch": "\"x86\"",
+        "sec-ch-ua-bitness": "\"64\"",
+        "sec-ch-ua-form-factors": "\"Desktop\"",
+        "sec-ch-ua-full-version": "\"133.0.6943.142\"",
+        "sec-ch-ua-full-version-list": "\"Not(A:Brand\";v=\"99.0.0.0\", \"Google Chrome\";v=\"133.0.6943.142\", \"Chromium\";v=\"133.0.6943.142\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-model": "\"\"",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-ch-ua-platform-version": "\"15.0.0\"",
+        "sec-ch-ua-wow64": "?0",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "x-client-data": "CLC1yQEIh7bJAQiitskBCKmdygEI7ODKAQiUocsBCImjywEIhaDNAQjpqc4BCL3VzgEIgNbOAQi64M4BCK7kzgEIjOXOARiPzs0BGOHizgE=",
+        "cookie": "__utmc=10102256; __utma=10102256.1127519021.1740957602.1741227837.1741244677.19; __utmz=10102256.1741244677.19.10.utmcsr=trends.google.com|utmccn=(referral)|utmcmd=referral|utmcct=/; __utmt=1; __utmb=10102256.3.10.1741244677; HSID=Axd4sT7jgiQJZxI35; SSID=ALG-6ly3f79ZskloZ; APISID=JOXLujcJUcSXPJ3h/ATDn9rFkuWpGmKwjn; SAPISID=0nutfgB2KiwE5Kgd/AhQ1IC-3dcxf77kpP; __Secure-1PAPISID=0nutfgB2KiwE5Kgd/AhQ1IC-3dcxf77kpP; __Secure-3PAPISID=0nutfgB2KiwE5Kgd/AhQ1IC-3dcxf77kpP; SEARCH_SAMESITE=CgQIrJ0B; SID=g.a000uAhwK_O9UJ94up-VgKYGSEzGKADY8lsN3Z4zExDYunjWOL9d2CrFKAjQb5WVHGV3EJeSeQACgYKAS8SARMSFQHGX2MijWsBAyGEV5FkAsSwNI4z1xoVAUF8yKpCbtylgAdCpGMkIGSL1aWp0076; __Secure-1PSID=g.a000uAhwK_O9UJ94up-VgKYGSEzGKADY8lsN3Z4zExDYunjWOL9dTivc0yVtbBesMgs0vQdIcAACgYKAWQSARMSFQHGX2MiUp2t6Yzi91KCrrTWoqtgARoVAUF8yKpWXB41sVSq_cqvvujj9JWS0076; __Secure-3PSID=g.a000uAhwK_O9UJ94up-VgKYGSEzGKADY8lsN3Z4zExDYunjWOL9dD8dQlEJXf6pLksCXjBOC4gACgYKAXMSARMSFQHGX2MiLnCPNQvAmi2boKzPKMk7cRoVAUF8yKpguI892pEF08fECnTOjA3J0076; _gid=GA1.3.252607514.1740957604; OTZ=7977560_24_24__24_; AEC=AVcja2e9yxiYx9C--Ukwt4HpLXcURKEx-sh_uU20EcRZi6uARTlBE6nLHlo; NID=522=vdPswisqVov3tPmA20frRzbZmUJjcZdjuYDU6ZxLEJFgYxvcZeFxg3qcvMj6xlinPRZRhxYGcdGd3zL-Wxezkc3On6WDb7YgsawCGsHgkkMagAS711IPnwEteUZ2ixVxsF4u_148pgAKZW1-9WSNBgyCKZPUFbxXi2MAiN1BEwvnn45NaZjn_XVjndFv49CG3NtIEkqMIRe0lmRntWz-UT5EytO_pudGpXJkc-qyrk03HNDWl7oJVKJ_NfkzJGF1uBhos2-tGNqj87KCV0bx7OhUyRUvvTm-xyRYzJqHIzfgg7io5rUk8bHflLmwuFu9jSuXNUVZ6pkxkkZ-Mb2sroyrrYJHLOWj3B5TbsMsRH7zzvO7Mi4uA_GN27xuWXXw_lYtljo8FsYv2GtWoqGty7NdYiiHPKd0JmCWQcNr5T8AYYyYXOO-3Zh6ek7rdhF0XNqpe-WxqcJ5-P2KSD9Pxf81oUW0oNSrbzQ82vzUJBPy_BfNAY0cGjCvbz2fHcvKASxXrSZN_zP6FE1QpWwK8Fab2IvB4r7bWwr118-wmle0E5EYJGOzaqVbqEKQUF6F9y1hlgR7dJ-tbpWEtyrbxMZxk6R9_58KdB1mc-LjCFkile0RZwTO0I59ImPtf7jKMLVZGvGKQuts1lW34QFLiojyjoKZcWNkFZpgcuephKfbpBCcGR2iXuHX6Hk_f_3FD2tjBmYD-Db3fJXED88SImEdVrMAmuPlDyuPdddJyUpyWD3CRvbODP15KnnRK83X87NypsV5GGo2nHQ5_pLwAbT-NbJ9RINkXxCAMXRt3AsoFx6D0Kkg__mnEoLYPcVrVgmh1JZBK5D5TDk0Z27Wope33tjSbCfFNkXsO9a8iOWOygnvGouGjBPuOvNL3g; __Secure-1PSIDTS=sidts-CjIBEJ3XVw19pCaSRbDiFr86ua_GH_SXUcb4UHuabATMmaLybpXXVIm09zkDOkDR8bF5ARAA; __Secure-3PSIDTS=sidts-CjIBEJ3XVw19pCaSRbDiFr86ua_GH_SXUcb4UHuabATMmaLybpXXVIm09zkDOkDR8bF5ARAA; _gat_gtag_UA_4401283=1; _ga=GA1.3.1127519021.1740957602; SIDCC=AKEyXzWCGzcpn9ZYnwlUd7E80ptMB6hZ16xGpbM06p6Eyb5pGqtUDgGSZTrr5eR5XcgVAG-iJ74; __Secure-1PSIDCC=AKEyXzXu8O0VanHt9DBE7Dq1HLWNkxs0nTLoJd8PtP74658xvbgHUfUBngTnAt73m3t0vaF410g; __Secure-3PSIDCC=AKEyXzUn2E8Rt24CYeONvlKONRIwihAribmY-NNx7ZMXgokMmPACfezB7Q289HktpHuEhYwmgMdT; _ga_VWZPXDNJJB=GS1.1.1741243129.23.1.1741245021.0.0.0",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+        "Referer": "https://trends.google.com/trends/explore?date=today%205-y&q=productivity&hl=en",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+    }
+}
