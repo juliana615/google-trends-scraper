@@ -7,6 +7,8 @@ from datetime import datetime
 from trendspy import Trends
 from pymongo import MongoClient
 
+TIME_DELAY = 6
+
 client = MongoClient('mongodb://127.0.0.1:27017')
 db = client.google_trends
 collection = db.data_by_filter
@@ -45,28 +47,28 @@ def get_trends_data(input_json):
         raise ValueError('timeframe must be now 1-H, now 4-H, now 1-d, now 7-d, today 1-m, today 3-m, today 12-m, today 5-y, or all')
     
     print(f"[+] Getting trends data for {keyword} in {geo} for {timeframe}")
-    tr = Trends(request_delay=3, retries=3)
+    tr = Trends(request_delay=TIME_DELAY, retries=3)
     
     print(f"[++] Getting interest_over_time for {keyword} in {geo} for {timeframe}")
     interest_over_time = tr.interest_over_time(keyword, geo=geo, headers=headers, timeframe=timeframe, cat=cat, gprop=gprop)
-    print("Waiting for 3 seconds...")
-    time.sleep(3)
+    print(f"Waiting for {TIME_DELAY} seconds...")
+    time.sleep(TIME_DELAY)
     print(f"[++] Getting interest_by_region for {keyword} in {geo} for {timeframe}")
     interest_by_region = tr.interest_by_region(keyword, geo=geo, timeframe=timeframe, cat=cat, gprop=gprop)
-    print("Waiting for 3 seconds...")
-    time.sleep(3)
+    print(f"Waiting for {TIME_DELAY} seconds...")
+    time.sleep(TIME_DELAY)
     print(f"[++] Getting related_topics for {keyword} in {geo} for {timeframe}")
     related_topics = tr.related_topics(keyword, geo=geo, headers=headers, timeframe=timeframe, cat=cat, gprop=gprop)
     for key in related_topics:
         related_topics[key] = related_topics[key].to_dict('records')
-    print("Waiting for 3 seconds...")
-    time.sleep(3)
+    print(f"Waiting for {TIME_DELAY} seconds...")
+    time.sleep(TIME_DELAY)
     print(f"[++] Getting related_queries for {keyword} in {geo} for {timeframe}")
     related_queries = tr.related_queries(keyword, geo=geo, headers=headers, timeframe=timeframe, cat=cat, gprop=gprop)
     for key in related_queries:
         related_queries[key] = related_queries[key].to_dict('records')
-    print("Waiting for 3 seconds...")
-    time.sleep(3)
+    print(f"Waiting for {TIME_DELAY} seconds...")
+    time.sleep(TIME_DELAY)
     
     trends_data = {
         "id": hashlib.sha1(f"{keyword}_{geo}_{timeframe}_{cat}_{gprop}".encode()).hexdigest(),
