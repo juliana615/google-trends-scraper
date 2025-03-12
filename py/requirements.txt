@@ -1,4 +1,5 @@
 requests
-trendspy
-matplotlib
+numpy
+pandas
+python-dateutil
 pymongo
