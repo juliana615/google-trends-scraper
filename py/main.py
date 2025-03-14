@@ -48,7 +48,7 @@ DAILY_RSS 				= f'https://trends.google.com/trends/trendingsearches/daily/rss'
 REALTIME_RSS            = f'https://trends.google.com/trending/rss'
 
 # --- TIME DELAY ----
-TIME_DELAY = 6
+TIME_DELAY = 1
 
 # ------ TREND TOPICS ---------
 TREND_TOPICS = {
@@ -1352,6 +1352,7 @@ def get_trends_data(input_json):
     
     print(f"[+] Getting trends data for {keyword} in {geo} for {timeframe}")
     tr = Trends(request_delay=TIME_DELAY, retries=3)
+    tr.set_proxy(PROXY_URL)
     
     print(f"[++] Getting interest_over_time for {keyword} in {geo} for {timeframe}")
     interest_over_time = tr.interest_over_time(keyword, geo=geo, headers=headers, timeframe=timeframe, cat=cat, gprop=gprop)
@@ -1387,8 +1388,9 @@ def get_trends_data(input_json):
     print("Data saved to MongoDB")
 
 def main():
+    keyword = input("Enter your keyword: ")
     input_json = {
-        "keyword": "python",
+        "keyword": keyword,
         "geo": "",
         "timeframe": "today 12-m",
         "category": 0,
