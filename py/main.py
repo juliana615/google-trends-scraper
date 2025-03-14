@@ -180,25 +180,7 @@ def _process_date_with_offset(date_part_1, offset_part):
 
 
 def convert_timeframe(timeframe, convert_fixed_timeframes_to_dates=False):
-	"""
-	Converts timeframe strings to Google Trends format.
-
-	Supports multiple formats:
-	1. Fixed timeframes ('now 1-H', 'today 12-m', etc.)
-	2. Date ranges ('2024-01-01 2024-12-31')
-	3. Date with offset ('2024-03-25 5-m')
-	4. Hour-specific ranges ('2024-03-25T12 2024-03-25T15')
-
-	Parameters:
-		timeframe (str): Input timeframe string
-		convert_fixed_timeframes_to_dates (bool): Convert fixed timeframes to dates
-
-	Returns:
-		str: Converted timeframe string in Google Trends format
-
-	Raises:
-		ValueError: If timeframe format is invalid
-	"""
+	
 	# If the timeframe is in the fixed set and conversion is not requested, return as is
 	if (timeframe in FIXED_TIMEFRAMES) and (not convert_fixed_timeframes_to_dates):
 		return timeframe
@@ -236,21 +218,7 @@ def timeframe_to_timedelta(timeframe):
 	return (datetime_2 - datetime_1)
 
 def verify_consistent_timeframes(timeframes):
-	"""
-	Verifies that all timeframes have consistent resolution.
-
-	Google Trends requires all timeframes in a request to have the same
-	data resolution (e.g., hourly, daily, weekly).
-
-	Parameters:
-		timeframes (list): List of timeframe strings
-
-	Returns:
-		bool: True if timeframes are consistent
-
-	Raises:
-		ValueError: If timeframes have different resolutions
-	"""
+	
 	if isinstance(timeframes, str):
 		return True
 
@@ -311,25 +279,7 @@ def check_timeframe_resolution(timeframes):
 
 # --- TREND KEYWORD ---
 class TrendKeyword:
-    """
-    Represents a trending search term with associated metadata.
-
-    This class encapsulates information about a trending keyword, including
-    its search volume, related news, geographic information, and timing data.
-
-    Attributes:
-        keyword (str): The trending search term
-        news (list): Related news articles
-        geo (str): Geographic location code
-        started_timestamp (tuple): When the trend started
-        ended_timestamp (tuple): When the trend ended (if finished)
-        volume (int): Search volume
-        volume_growth_pct (float): Percentage growth in search volume
-        trend_keywords (list): Related keywords
-        topics (list): Related topics
-        news_tokens (list): Associated news tokens
-        normalized_keyword (str): Normalized form of the keyword
-    """
+    
     def __init__(self, item: list):
         (
             self.keyword,
@@ -450,22 +400,7 @@ class TrendKeyword:
         return self.brief_summary()
 
 class TrendKeywordLite:
-    """
-    A lightweight version of TrendKeyword for simple trend representation.
-
-    This class provides a simplified view of trending keywords, primarily used
-    for RSS feeds and basic trending data.
-
-    Attributes:
-        keyword (str): The trending search term
-        volume (str): Approximate search volume
-        trend_keywords (list): Related keywords
-        link (str): URL to more information
-        started (int): Unix timestamp when the trend started
-        picture (str): URL to related image
-        picture_source (str): Source of the picture
-        news (list): Related news articles
-    """
+    
     def __init__(self, keyword, volume, trend_keywords, link, started, picture, picture_source, news):
         self.keyword = keyword
         self.volume = volume
@@ -526,27 +461,13 @@ class TrendKeywordLite:
 
 # --- TREND LIST ---
 class TrendList(list):
-    """
-    A list-like container for trending topics with additional filtering capabilities.
-    Inherits from list to maintain all standard list functionality.
-    """
+    
     
     def __init__(self, trends: List[TrendKeyword]):
         super().__init__(trends)
     
     def filter_by_topic(self, topic: Union[int, str, List[Union[int, str]]]) -> 'TrendList':
-        """
-        Filter trends by topic ID or name.
         
-        Args:
-            topic: Topic identifier. Can be:
-                - int: Topic ID (e.g., 18 for Technology)
-                - str: Topic name (e.g., 'Technology')
-                - list of int/str: Multiple topics (matches any)
-        
-        Returns:
-            TrendList: New TrendList containing only trends matching the specified topic(s)
-        """
         topics = [topic] if not isinstance(topic, list) else topic
         
         name_to_id = {name.lower(): id_ for id_, name in TREND_TOPICS.items()}
@@ -568,12 +489,7 @@ class TrendList(list):
         return TrendList(filtered)
     
     def get_topics_summary(self) -> dict:
-        """
-        Get a summary of topics present in the trends.
         
-        Returns:
-            dict: Mapping of topic names to count of trends
-        """
         topic_counts = {}
         for trend in self:
             for topic_id in trend.topics:
@@ -666,11 +582,7 @@ def parse_xml_to_dict(text, prefix=''):
 	return item_dict
 
 def get_utc_offset_minutes():
-    """
-    Returns the local time offset from UTC in minutes.
-    Positive values for time zones ahead of UTC (eastward),
-    negative values for time zones behind UTC (westward).
-    """
+    
     # Get current local time
     now = datetime.now()
     
@@ -718,24 +630,7 @@ def truncate_string(s, max_length):
 
 # --- NEWS ARTICLE ---
 class NewsArticle:
-    """
-    Represents a news article related to a trending topic.
-
-    This class handles both dictionary and list-based article data from
-    various Google Trends API endpoints.
-
-    Parameters:
-        title (str): Article title
-        url (str): Article URL
-        source (str): News source name
-        picture (str): URL to article image
-        time (str or int): Publication time or timestamp
-        snippet (str): Article preview text
-
-    Note:
-        If time is provided as a string with 'ago' format (e.g., '2 hours ago'),
-        it will be automatically converted to a timestamp.
-    """
+    
     def __init__(self, title=None, url=None, source=None, picture=None, time=None, snippet=None, article_ids=None):
         self.title = title
         self.url = url
@@ -787,18 +682,7 @@ class NewsArticle:
 # --- HIERARCHICAL SEARCH ---
 
 def flatten_tree(node, parent_id='', result=None, join_ids=True):
-    """
-    Recursively transforms a tree structure into a flat list.
     
-    Args:
-        node (dict): Tree node with 'name', 'id' and optional 'children' keys
-        parent_id (str): Parent node ID
-        result (list): Accumulated result
-        join_ids (bool): Whether to join IDs with parent (True for geo, False for categories)
-        
-    Returns:
-        list: List of dictionaries with name and id
-    """
     if result is None:
         result = []
     
@@ -821,32 +705,10 @@ def flatten_tree(node, parent_id='', result=None, join_ids=True):
     return result
 
 class HierarchicalIndex:
-    """
-    An index for efficient searches in hierarchical Google Trends data structures.
-
-    This class provides fast lookups for hierarchical data like locations and categories,
-    supporting both exact and partial matching of names.
-
-    Examples:
-        - Geographical hierarchies (Country -> Region -> City)
-        - Category hierarchies (Main category -> Subcategory)
-
-    Methods:
-        add_item(item): Add an item to the index
-        exact_search(name): Find exact match for name
-        partial_search(query): Find items containing the query
-        id_search(id_query): Find by ID (supports both exact and partial matching)
-    """
+    
     
     def __init__(self, items: List[dict], partial_id_search: bool = True):
-        """
-        Initialize the search index.
         
-        Args:
-            items (List[dict]): List of dictionaries with 'name' and 'id'
-            partial_id_search (bool): Whether to allow partial ID matches 
-                (True for geo locations, False for categories)
-        """
         # Main storage: dict with lowercase name as key
         self.name_to_item: Dict[str, dict] = {}
         
@@ -861,12 +723,7 @@ class HierarchicalIndex:
             self.add_item(item)
     
     def add_item(self, item: dict) -> None:
-        """
-        Add a single item to the index.
         
-        Args:
-            item (dict): Dictionary with 'name' and 'id'
-        """
         name = item['name'].lower()
         
         # Add to main storage
@@ -881,27 +738,11 @@ class HierarchicalIndex:
                 self.word_index[word].append(name)
     
     def exact_search(self, name: str) -> Optional[dict]:
-        """
-        Perform exact name search (case-insensitive).
         
-        Args:
-            name (str): Name to search for
-            
-        Returns:
-            Optional[dict]: Item dictionary if found, None otherwise
-        """
         return self.name_to_item.get(name.lower())
     
     def partial_search(self, query: str) -> List[dict]:
-        """
-        Perform partial name search (case-insensitive).
         
-        Args:
-            query (str): Search query string
-            
-        Returns:
-            List[dict]: List of matching item dictionaries
-        """
         query = query.lower()
         results = set()
         
@@ -919,15 +760,7 @@ class HierarchicalIndex:
         return [self.name_to_item[name] for name in results]
     
     def id_search(self, id_query: str) -> List[dict]:
-        """
-        Search by ID.
         
-        Args:
-            id_query (str): ID or partial ID to search for
-            
-        Returns:
-            List[dict]: List of matching item dictionaries
-        """
         if self.partial_id_search:
             # For geo data - allow partial matches
             return [item for item in self.name_to_item.values() 
@@ -938,17 +771,7 @@ class HierarchicalIndex:
                    if item['id'] == id_query]
 
 def create_hierarchical_index(tree_data: dict, join_ids: bool = True) -> HierarchicalIndex:
-    """
-    Create a complete search system from a hierarchical tree structure.
     
-    Args:
-        tree_data (dict): Original tree structure
-        join_ids (bool): Whether to join IDs with parent 
-            (True for geo locations, False for categories)
-        
-    Returns:
-        HierarchicalIndex: Initialized search system
-    """
     # First flatten the tree
     flat_items = flatten_tree(tree_data, join_ids=join_ids)
     # Then create and return the search index
@@ -959,19 +782,7 @@ def create_hierarchical_index(tree_data: dict, join_ids: bool = True) -> Hierarc
 
 # --- CONVERTER ---
 class TrendsDataConverter:
-	"""
-	Converts raw Google Trends API responses to pandas DataFrames.
-
-	This class provides static methods for converting various types of
-	Google Trends data into more usable formats.
-
-	Methods:
-		interest_over_time: Converts timeline data
-		related_queries: Converts related queries data
-		geo_data: Converts geographic data
-		suggestions: Converts search suggestions
-		rss_items: Parses RSS feed items
-	"""
+	
 	@staticmethod
 	def token_to_bullets(token_data):
 		items = token_data.get('request', {}).get('comparisonItem', [])
@@ -987,17 +798,7 @@ class TrendsDataConverter:
 
 	@staticmethod
 	def interest_over_time(widget_data, keywords, time_as_index=True):
-		"""
-		Converts interest over time data to a pandas DataFrame.
-
-		Parameters:
-			widget_data (dict): Raw API response data
-			keywords (list): List of keywords for column names
-			time_as_index (bool): Use time as DataFrame index
-
-		Returns:
-			pandas.DataFrame: Processed interest over time data
-		"""
+		
 		timeline_data = widget_data
 		timeline_data = timeline_data.get('default', timeline_data)
 		timeline_data = timeline_data.get('timelineData', timeline_data)
@@ -1129,47 +930,17 @@ class TrendsQuotaExceededError(Exception):
         )
 
 class BatchPeriod(Enum): # update every 2 min
-	'''
-	Time periods for batch operations.
-	'''
+	
 	Past4H  = 2 #31 points (new points every 8 min)
 	Past24H = 3 #91 points (every 16 min)
 	Past48H = 5 #181 points (every 16 min)
 	Past7D  = 4 #43 points (every 4 hours) 
 	
 class Trends:
-	"""
-	A client for accessing Google Trends data.
-
-	This class provides methods to analyze search trends, get real-time trending topics,
-	and track interest over time and regions.
-
-	Parameters:
-		hl (str): Language and country code (e.g., 'en-US'). Defaults to 'en-US'.
-		tzs (int): Timezone offset in minutes. Defaults to current system timezone.
-		use_entity_names (bool): Whether to use entity names instead of keywords. 
-			Defaults to False.
-		proxy (str or dict): Proxy configuration. Can be a string URL or a dictionary
-			with protocol-specific proxies. Examples:
-			- "http://user:pass@10.10.1.10:3128"
-			- {"http": "http://10.10.1.10:3128", "https": "http://10.10.1.10:1080"}
-	"""
+	
 		
 	def __init__(self, language='en', tzs=360, request_delay=1., max_retries=3, use_enitity_names = False, proxy=None, **kwargs):
-		"""
-		Initialize the Trends client.
 		
-		Args:
-			language (str): Language code (e.g., 'en', 'es', 'fr').
-			tzs (int): Timezone offset in minutes. Defaults to 360.
-			request_delay (float): Minimum time interval between requests in seconds. Helps avoid hitting rate limits and behaving like a bot. Set to 0 to disable.
-			max_retries (int): Maximum number of retry attempts for failed requests. Each retry includes exponential backoff delay of 2^(max_retries-retries) seconds for rate limit errors (429, 302).
-			use_enitity_names (bool): Whether to use entity names instead of keywords.
-			proxy (str or dict): Proxy configuration.
-			**kwargs: Additional arguments for backwards compatibility.
-				- hl (str, deprecated): Old-style language code (e.g., 'en' or 'en-US').
-				If provided, will be used as fallback when language is invalid.
-		"""
 		if isinstance(language, str) and len(language) >= 2:
 			self.language = language[:2].lower()
 		elif 'hl' in kwargs and isinstance(kwargs['hl'], str) and len(kwargs['hl']) >= 2:
@@ -1192,15 +963,7 @@ class Trends:
 		self.set_proxy(proxy)
 	
 	def set_proxy(self, proxy=None):
-		"""
-		Set or update proxy configuration for the session.
-
-		Args:
-			proxy (str or dict, optional): Proxy configuration. Can be:
-				- None: Remove proxy configuration
-				- str: URL for all protocols (e.g., "http://10.10.1.10:3128")
-				- dict: Protocol-specific proxies (e.g., {"http": "...", "https": "..."})
-		"""
+		
 		if isinstance(proxy, str):
 			# Convert string URL to dictionary format
 			proxy = {
@@ -1221,19 +984,7 @@ class Trends:
 
 	@staticmethod
 	def _parse_protected_json(response: requests.models.Response):
-		"""
-		Parses JSON data from a protected API response.
-
-		Args:
-			response (requests.models.Response): Response object from requests
-
-		Returns:
-			dict: Parsed JSON data
-
-		Raises:
-			ValueError: If response status is not 200, content type is invalid,
-					or JSON parsing fails
-		"""
+		
 		valid_content_types = {'application/json', 'application/javascript', 'text/javascript'}
 		content_type = response.headers.get('Content-Type', '').split(';')[0].strip().lower()
 		
@@ -1279,20 +1030,7 @@ class Trends:
 		return req
 
 	def _get(self, url, params=None, headers=None):
-		"""
-		Make HTTP GET request with retry logic and proxy support.
 		
-		Args:
-			url (str): URL to request
-			params (dict, optional): Query parameters
-			
-		Returns:
-			requests.Response: Response object
-			
-		Raises:
-			ValueError: If response status code is not 200
-			requests.exceptions.RequestException: For network-related errors
-		"""
 		retries = self.max_retires
 		response_code = 429
 		response_codes = []
@@ -1357,12 +1095,7 @@ class Trends:
 		return data
 
 	def _get_token_data(self, url, params=None, request_fix=None, headers=None, raise_quota_error=False):
-		"""
-		Internal method to get token data from Google Trends API.
 		
-		Handles both 'keyword' and 'keywords' parameters for backward compatibility
-		and convenience.
-		"""
 
 		params 	= self._encode_request(params)
 		req 	= self._get(url, params=params, headers=headers)
@@ -1389,51 +1122,7 @@ class Trends:
 		return req
 
 	def interest_over_time(self, keywords, timeframe="today 12-m", geo='', cat=0, gprop='', return_raw = False, headers=None):
-		"""
-		Retrieves interest over time data for specified keywords.
 		
-		Parameters:
-			keywords (str or list): Keywords to analyze.
-			timeframe : str or list
-				Defines the time range for querying interest over time. It can be specified as a single string or a list. 
-				Supported formats include:
-
-				- 'now 1-H', 'now 4-H', 'now 1-d', 'now 7-d'
-				- 'today 1-m', 'today 3-m', 'today 12-m', 'today 5-y'
-				- 'all' for all available data
-				- 'YYYY-MM-DD YYYY-MM-DD' for specific date ranges
-				- 'YYYY-MM-DDTHH YYYY-MM-DDTHH' for hourly data (if less than 8 days)
-
-				Additional flexible formats:
-				
-				1. **'now {offset}'**: Timeframes less than 8 days (e.g., 'now 72-H' for the last 72 hours).
-				2. **'today {offset}'**: Larger periods starting from today (e.g., 'today 5-m' for the last 5 months).
-				3. **'date {offset}'**: Specific date with offset (e.g., '2024-03-25 5-m' for 5 months back from March 25, 2024).
-
-				**Note:** Offsets always go backward in time.
-
-				Resolutions based on timeframe length:
-				
-				- `< 5 hours`: 1 minute
-				- `5 hours <= delta < 36 hours`: 8 minutes
-				- `36 hours <= delta < 72 hours`: 16 minutes
-				- `72 hours <= delta < 8 days`: 1 hour
-				- `8 days <= delta < 270 days`: 1 day
-				- `270 days <= delta < 1900 days`: 1 week
-				- `>= 1900 days`: 1 month
-
-				Restrictions:
-				- **Same resolution**: All timeframes must have the same resolution.
-				- **Timeframe length**: Maximum timeframe cannot be more than twice the length of the minimum timeframe.
-			geo (str): Geographic location code (e.g., 'US' for United States).
-			cat (int): Category ID. Defaults to 0 (all categories).
-			gprop (str): Google property filter.
-			return_raw (bool): If True, returns raw API response.
-
-		Returns:
-			pandas.DataFrame or raw API response
-			Processed trending keywords data or raw API data if `return_raw=True`
-		"""
 		check_timeframe_resolution(timeframe)
 		timeframe = list(map(convert_timeframe, ensure_list(timeframe)))
 
@@ -1450,33 +1139,7 @@ class Trends:
 		return data
 	
 	def related_queries(self, keyword, timeframe="today 12-m", geo='', cat=0, gprop='', return_raw = False, headers=None):
-		"""
-        Retrieves related queries for a single search term.
-        
-        Args:
-            keyword (str): A single keyword to analyze
-            timeframe (str): Time range for analysis
-            geo (str): Geographic location code
-            cat (int): Category ID
-            gprop (str): Google property filter
-            return_raw (bool): If True, returns raw API response
-            headers (dict, optional): Custom request headers. Can be used to set different referer
-                                    to help bypass quota limits
-        
-        Raises:
-            TrendsQuotaExceededError: When API quota is exceeded
-			
-		Parameters:
-			dict: Two DataFrames containing 'top' and 'rising' related queries
-			
-		Example:
-			>>> tr = Trends()
-			>>> related = tr.related_queries('python')
-			>>> print("Top queries:")
-			>>> print(related['top'])
-			>>> print("\nRising queries:")
-			>>> print(related['rising'])
-		"""
+		
 		headers = headers or {"referer": "https://trends.google.com/trends/explore"}
 		token, data = self._get_token_data(EMBED_QUERIES_URL, locals(), headers=headers, raise_quota_error=True)
 		if return_raw:
@@ -1484,30 +1147,7 @@ class Trends:
 		return TrendsDataConverter.related_queries(data)
 	
 	def related_topics(self, keyword, timeframe="today 12-m", geo='', cat=0, gprop='', return_raw = False, headers=None):
-		"""
-		Retrieves related topics for a single search term.
 		
-		Parameters:
-            keyword (str): A single keyword to analyze
-            timeframe (str): Time range for analysis
-            geo (str): Geographic location code
-            cat (int): Category ID
-            gprop (str): Google property filter
-            return_raw (bool): If True, returns raw API response
-            headers (dict, optional): Custom request headers. Can be used to set different referer
-                                    to help bypass quota limits
-        
-        Raises:
-            TrendsQuotaExceededError: When API quota is exceeded
-			
-		Example:
-			>>> tr = Trends()
-			>>> related = tr.related_topics('python')
-			>>> print("Top topics:")
-			>>> print(related['top'])
-			>>> print("\nRising topics:")
-			>>> print(related['rising'])
-		"""
 		headers = headers or {"referer": "https://trends.google.com/trends/explore"}
 		token, data = self._get_token_data(EMBED_TOPICS_URL, locals(), headers=headers, raise_quota_error=True)
 		if return_raw:
@@ -1516,26 +1156,7 @@ class Trends:
 
 
 	def interest_by_region(self, keywords, timeframe="today 12-m", geo='', cat=0, gprop='', resolution=None, inc_low_vol=False, return_raw=False):
-		"""
-		Retrieves geographical interest data based on keywords and other parameters.
-
-		Parameters:
-			keywords (str or list): Search keywords to analyze.
-			timeframe (str): Time range for analysis (e.g., "today 12-m", "2022-01-01 2022-12-31")
-			geo (str): Geographic region code (e.g., "US" for United States)
-			cat (int): Category ID (default: 0 for all categories)
-			gprop (str): Google property filter
-			resolution (str): Geographic resolution level:
-				- 'COUNTRY' (default when geo is empty)
-				- 'REGION' (states/provinces)
-				- 'CITY' (cities)
-				- 'DMA' (Designated Market Areas)
-			inc_low_vol (bool): Include regions with low search volume
-			return_raw (bool): Return unprocessed API response data
-
-		Returns:
-			pandas.DataFrame or dict: Processed geographic interest data, or raw API response if return_raw=True
-		"""
+		
 		if (not resolution):
 			resolution = 'COUNTRY' if ((geo=='') or (not geo)) else 'REGION'
 
@@ -1612,28 +1233,7 @@ class Trends:
 		return data
 	
 	def trending_now(self, geo='US', language='en', hours=24, num_news=0, return_raw=False):
-		"""
-		Retrieves trending keywords that have seen significant growth in popularity within the last specified number of hours.
-
-		Parameters:
-		-----------
-		geo : str, optional
-			The geographical region for the trends, default is 'US' (United States).
-		language : str, optional
-			The language of the trends, default is 'en' (English).
-		hours : int, optional
-			The time window (in hours) for detecting trending keywords. Minimum value is 1, and the maximum is 191. Default is 24.
-		num_news : int, optional
-			NOT RECOMMENDED to use as it significantly slows down the function. The feature for fetching news associated with the trends is rarely used on the platform. 
-			If you want trending keywords with news, consider using `trending_now_by_rss` instead. Default is 0.
-		return_raw : bool, optional
-			If set to True, the function returns the raw data directly from the API. Default is False, meaning processed data will be returned.
-
-		Returns:
-		--------
-		dict or raw API response
-			Processed trending keywords data or raw API data if `return_raw=True`.
-		"""
+		
 		req_data = [None, None, geo, num_news, language, hours, 1]
 		req = self._get_batch('i0OFE', req_data)
 		data = self._parse_protected_json(req)
@@ -1645,21 +1245,7 @@ class Trends:
 		return data
 
 	def trending_now_by_rss(self, geo='US', return_raw=False):
-		"""
-		Retrieves trending keywords from the RSS feed for a specified geographical region.
-
-		Parameters:
-		-----------
-		geo : str, optional
-			The geographical region for the trends, default is 'US' (United States).
-		return_raw : bool, optional
-			If set to True, the function returns the raw data directly from the API. Default is False, meaning processed data will be returned.
-
-		Returns:
-		--------
-		Union[dict, List[TrendKeywordLite]]
-			A dictionary with raw RSS feed data if `return_raw=True`, or a list of `TrendKeyword` objects otherwise.
-		"""
+		
 		params = {'geo':geo}
 		req  = self._get(REALTIME_RSS, params)
 		if return_raw:
@@ -1691,32 +1277,7 @@ class Trends:
 		return data
 	
 	def categories(self, find: str = None, language: str = None) -> List[dict]:
-		"""
-		Search for categories in Google Trends data.
 		
-		This function retrieves and caches category data from Google Trends API, then performs
-		a partial search on the categories. The results are cached by language to minimize API calls.
-		
-		Args:
-			find (str, optional): Search query for categories. If None or empty string,
-				returns all available categories. Defaults to None.
-			language (str, optional): Language code for the response (e.g., 'en', 'es').
-				If None, uses the instance's default language. Defaults to None.
-		
-		Returns:
-			List[dict]: List of matching categories. Each category is a dictionary containing:
-				- name (str): Category name in the specified language
-				- id (str): Category identifier
-		
-		Examples:
-			>>> trends = Trends()
-			>>> # Find all categories containing "computer"
-			>>> computer_cats = trends.categories(find="computer")
-			>>> # Find all categories in Spanish
-			>>> spanish_cats = trends.categories(language="es")
-			>>> # Find specific category in German
-			>>> tech_cats = trends.categories(find="Technologie", language="de")
-		"""
 		cur_language = language or self.language
 		
 		if cur_language not in self._category_cache:
@@ -1730,37 +1291,7 @@ class Trends:
 		return self._category_cache[cur_language].partial_search(find)
 
 	def geo(self, find: str = None, language: str = None) -> List[dict]:
-		"""
-		Search for geographical locations in Google Trends data.
 		
-		This function retrieves and caches geographical data from Google Trends API, then performs
-		a partial search on the locations. The results are cached by language to minimize API calls.
-		
-		Args:
-			find (str, optional): Search query for locations. If None or empty string,
-				returns all available locations. Defaults to None.
-			language (str, optional): Language code for the response (e.g., 'en', 'es').
-				If None, uses the instance's default language. Defaults to None.
-		
-		Returns:
-			List[dict]: List of matching locations. Each location is a dictionary containing:
-				- name (str): Location name in the specified language
-				- id (str): Location identifier (e.g., 'US-NY' for New York, United States)
-		
-		Examples:
-			>>> trends = GoogleTrends()
-			>>> # Find all locations containing "York"
-			>>> locations = trends.geo(find="York")
-			>>> # Find all locations in Spanish
-			>>> spanish_locations = trends.geo(language="es")
-			>>> # Find specific location in German
-			>>> berlin = trends.geo(find="Berlin", language="de")
-		
-		Note:
-			- Results are cached by language to improve performance
-			- API response is parsed and structured for efficient searching
-			- Case-insensitive partial matching is used for searches
-		"""
 		# Use provided language or fall back to instance default
 		cur_language = language or self.language
 		
